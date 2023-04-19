@@ -1,15 +1,18 @@
 import unittest
+import time
+import os
 
 from fastapi.testclient import TestClient
 
-from api.main import app
+from castle.utils import generate_uid
+from castle.api.main import fastapi_app
 
 
-class MyApiTests(unittest.TestCase):
+class APITests(unittest.TestCase):
     def setUp(self):
-        self.client = TestClient(app)
-        self.api_key: str = "valid_api_key"
-        self.uid: str = "098h230fb"
+        self.client = TestClient(fastapi_app)
+        self.api_key: str = os.environ["API_KEY"]
+        self.uid: str = generate_uid()
         # Additional setup for your tests
 
     def test_process_data(self):
@@ -27,11 +30,15 @@ class MyApiTests(unittest.TestCase):
 
     def test_get_status(self):
         # Define a test case for the `/status/` endpoint
+        time.sleep(5)
         response = self.client.get(
             f"/status/{self.api_key}/{self.uid}",
         )
         self.assertEqual(response.status_code, 200)
+        print(response.json())
         # Additional assertions for the response data, e.g. response.json()
+        # response_dict: dict = response.json()
+        # self.assertEqual(response_dict["status"], "completed")
 
 if __name__ == "__main__":
     unittest.main()
