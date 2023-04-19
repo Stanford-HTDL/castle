@@ -35,7 +35,6 @@ class APITests(unittest.TestCase):
             f"/status/{self.api_key}/{self.uid}",
         )
         self.assertEqual(response.status_code, 200)
-        print(response.json())
         # Additional assertions for the response data, e.g. response.json()
         # response_dict: dict = response.json()
         # self.assertEqual(response_dict["status"], "completed")
