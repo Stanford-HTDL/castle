@@ -1,9 +1,9 @@
 import time
 
-from .celery import app
+from .celery import celery_app
 
 
-@app.task
+@celery_app.task
 def long_running_task(start: str, stop: str, id: str, api_key: str):
     # Implement your long-running task here
     # This function will be executed asynchronously by Celery

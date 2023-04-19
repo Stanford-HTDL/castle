@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 # from google.cloud import storage
 
 from api.tasks import long_running_task
+from api.celery import celery_app
 
 API_KEY: str = os.environ["API_KEY"]
 
@@ -82,7 +83,7 @@ def get_status(api_key: str, uid: str):
     if api_key != API_KEY:
         return {"error": "Invalid API key"}    
     # Check if the task is completed
-    task = AsyncResult(uid)
+    task = celery_app.AsyncResult(uid)
     if task.ready():
         # Task is completed, get the result and return the download link
         if task.result:
