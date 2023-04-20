@@ -6,12 +6,19 @@ from fastapi.testclient import TestClient
 
 from castle.utils import generate_uid
 from castle.api.main import fastapi_app
+from castle.api.utils import get_api_keys
 
 
 class APITests(unittest.TestCase):
+    def _get_api_key(self) -> str:
+        api_keys_path = os.environ["API_KEYS_PATH"]
+        valid_api_keys = get_api_keys(api_keys_path=api_keys_path)
+        return valid_api_keys[0]
+
+
     def setUp(self):
         self.client = TestClient(fastapi_app)
-        self.api_key: str = os.environ["API_KEY"]
+        self.api_key: str = self._get_api_key()
         self.uid: str = generate_uid()
         # Additional setup for your tests
 
