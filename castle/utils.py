@@ -5,7 +5,7 @@ import string
 from typing import Optional
 
 
-def generate_uid(uid_len: Optional[int] = 12):
+def generate_uid(uid_len: Optional[int] = 64):
     uid: str = ''.join(
         random.SystemRandom().choice(
             string.ascii_lowercase + string.digits
