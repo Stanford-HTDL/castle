@@ -1,7 +1,7 @@
 __pycache__/
 .Python
 
-env/
+env*/
 
 *.env
 *.json

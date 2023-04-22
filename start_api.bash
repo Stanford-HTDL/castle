@@ -18,4 +18,4 @@ rabbitmq-server > "$LOG_DIR/rabbitmq.log" 2>&1 &
 celery -A castle.celery_config worker -l INFO > "$LOG_DIR/celery.log" 2>&1 &
 
 # Start FastAPI app
-uvicorn castle.api.main:fastapi_app --host 0.0.0.0 --port 8000 > "$LOG_DIR/uvicorn.log" 2>&1 &
+uvicorn castle.main:app --host 0.0.0.0 --port 8000 > "$LOG_DIR/uvicorn.log" 2>&1 &

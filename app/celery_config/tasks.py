@@ -2,7 +2,7 @@ __author__ = "Richard Correro (richard@richardcorrero.com)"
 
 from typing import Any
 
-from castle.backend.tasks import backend_task
+from ..backend.tasks import backend_task
 
 from .celery import celery_app
 

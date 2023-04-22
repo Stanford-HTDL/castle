@@ -4,9 +4,9 @@ import os
 
 from fastapi.testclient import TestClient
 
-from castle.utils import generate_uid
-from castle.api.main import fastapi_app
-from castle.api.utils import get_api_keys
+from app.utils import generate_uid
+from app.main import app
+from app.utils import get_api_keys
 
 
 class APITests(unittest.TestCase):
@@ -17,7 +17,7 @@ class APITests(unittest.TestCase):
 
 
     def setUp(self):
-        self.client = TestClient(fastapi_app)
+        self.client = TestClient(app)
         self.api_key: str = self._get_api_key()
         self.uid: str = generate_uid()
         self.headers = {  

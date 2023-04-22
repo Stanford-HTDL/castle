@@ -1,0 +1,16 @@
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    environment:
+      - APP_BROKER_URI=amqp://rabbitmq
+      - APP_BACKEND_URI=redis://redis
+      - API_KEYS_PATH=_api_keys.json
+    ports:
+      - 80:80
+
+networks:
+  traefik-public:
+    external: false
