@@ -48,4 +48,4 @@ networks:
     external: true
 
   bridge-net:
-    external: true
+    external: false
