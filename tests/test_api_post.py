@@ -3,12 +3,10 @@ import os
 import requests
 
 
-def test(api_key: str):
-    # Define the URL and headers
-    url = "http://localhost/process"
+def test(url: str, api_key: str):
     headers = {
-        "Content-Type": "application/json",  # Example header
-        "Authorization": f"Bearer {api_key}"   # Example header
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
     }
 
     # Define the data to be sent in the request body
@@ -31,5 +29,6 @@ def test(api_key: str):
 
 
 if __name__ == "__main__":
+    url: str = os.environ["URL"]
     api_key = os.environ["API_KEY"]
-    test(api_key=api_key)
+    test(url=url, api_key=api_key)
