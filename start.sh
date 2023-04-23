@@ -1,12 +1,24 @@
 #!/bin/sh
 
-# Source the vars.env file to set environment variables
-set -a
-source vars.env
-set +a
+while true; do
+    read -p "Have you set the necessary environment variables [y/n]?" yn
+    case $yn in
+        [Yy]* ) echo "Starting..."; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+# # Source the .env file to set environment variables
+# set -a
+# source <.ENV FILEPATH>
+# set +a
+
+# Create Docker network(s)
+# docker network create <NETWORK NAME>
 
 # Start Celery worker(s)
-docker compose -f docker-compose.worker.yml up --detach --build
+docker compose -f docker-compose.worker.yml up --detach --build --remove-orphans
 
 # Start Traefik
 docker compose -f docker-compose.traefik.yml up --detach --build

@@ -45,7 +45,7 @@ services:
 networks:
 
   traefik-public:
-    external: true
+    external: false
 
   bridge-net:
     external: false
