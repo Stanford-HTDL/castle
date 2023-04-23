@@ -1,12 +1,12 @@
 __pycache__/
-.Python
+logs/
 
 env*/
 
 *.env
 *.json
-
-logs/
+*.Python
 *.log
 *.rdb
 *.dump
+*.conf

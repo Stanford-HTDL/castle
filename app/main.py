@@ -7,15 +7,20 @@ from celery.result import AsyncResult
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel, Field
+from starlette.responses import RedirectResponse
 
-from .utils import get_api_keys, generate_uid
 from .celery_config.celery import celery_app
 from .celery_config.tasks import task
+from .utils import generate_uid, get_api_keys
 
 API_KEYS_PATH: str = os.environ["API_KEYS_PATH"]
+APP_TITLE: str = os.environ["APP_TITLE"]
+APP_DESCRIPTION: str = os.environ["APP_DESCRIPTION"]
+APP_VERSION: str = os.environ["APP_VERSION"]
+
 valid_api_keys: List[str] = get_api_keys(api_keys_path=API_KEYS_PATH)
 
-app = FastAPI()
+app = FastAPI(title=APP_TITLE, description=APP_DESCRIPTION, version=APP_VERSION)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # use token authentication
 
@@ -37,7 +42,7 @@ class TaskParams(BaseModel):
 
 @app.get("/")
 def read_main():
-    return {"message": "'ello mate."}
+    return RedirectResponse(url=f"/redoc", status_code=303)
 
 
 @app.post("/process", dependencies=[Depends(api_key_auth)])

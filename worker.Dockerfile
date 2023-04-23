@@ -10,9 +10,6 @@ RUN pip3 install -r /requirements.txt
 
 COPY ./_gcs_creds.json /_gcs_creds.json
 
-COPY ./blake.txt /blake.txt
+COPY ./lorem_ipsum.txt /lorem_ipsum.txt
 
-# WORKDIR /usr/src
-
-# CMD celery worker -A worker.celery --loglevel=info
 CMD celery -A app.celery_config worker -l INFO

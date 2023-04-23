@@ -4,7 +4,7 @@ import json
 
 from fastapi.openapi.utils import get_openapi
 
-from castle.main import app
+from app.main import app
 
 if __name__ == "__main__":
     with open('openapi.json', 'w') as f:

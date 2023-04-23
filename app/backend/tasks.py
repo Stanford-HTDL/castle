@@ -50,10 +50,10 @@ def _backend_task(
 
 
 def backend_task(*args, **kwargs) -> dict:
-    filenames: List[str] = ["blake.txt"]
+    filenames: List[str] = ["lorem_ipsum.txt"]
     gcs_creds_path = os.environ["GCS_CREDS_PATH"]
     bucket_name = os.environ["GCS_BUCKET_NAME"]
-    blob_name: str = "dir_0/dir_1/dir_2/blake.zip"
+    blob_name: str = "dir_0/dir_1/dir_2/lorem_ipsum.zip"
     content_type: str = "application/zip"
     exp_minutes: int = 60
     signed_url: str = _backend_task(

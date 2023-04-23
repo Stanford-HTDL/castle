@@ -1,9 +1,18 @@
 services:
 
-  backend:
+  api:
     build:
       context: .
       dockerfile: api.Dockerfile
+    environment:
+      - APP_BROKER_URI=${APP_BROKER_URI}
+      - APP_BACKEND_URI=${APP_BACKEND_URI}
+      - API_KEYS_PATH=${API_KEYS_PATH}
+      - APP_TITLE=${APP_TITLE}
+      - APP_DESCRIPTION=${APP_DESCRIPTION}
+      - APP_VERSION=${APP_VERSION}
+      - CELERY_APP_NAME=${CELERY_APP_NAME}
+      - CELERY_APP_INCLUDE=${CELERY_APP_INCLUDE}
     restart: always
     labels:
       # Enable Traefik for this specific "backend" service

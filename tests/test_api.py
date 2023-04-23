@@ -4,9 +4,9 @@ import os
 
 from fastapi.testclient import TestClient
 
-from app.utils import generate_uid
-from app.main import app
-from app.utils import get_api_keys
+from ..app.utils import generate_uid
+from ..app.main import app
+from ..app.utils import get_api_keys
 
 
 class APITests(unittest.TestCase):
