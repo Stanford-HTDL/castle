@@ -41,7 +41,7 @@ class TaskParams(BaseModel):
 
 
 @app.get("/")
-def read_main():
+async def read_main():
     return RedirectResponse(url=f"/redoc", status_code=303)
 
 
