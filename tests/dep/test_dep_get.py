@@ -3,9 +3,9 @@ import os
 import requests
 
 
-def test(api_key: str, uid: str):
+def test(base_url: str, api_key: str, uid: str):
     # Define the URL and headers
-    url = f"http://localhost/status/{uid}"
+    url = f"{base_url}/status/{uid}"
     headers = {
         "Content-Type": "application/json",  # Example header
         "Authorization": f"Bearer {api_key}"   # Example header
@@ -23,6 +23,7 @@ def test(api_key: str, uid: str):
 
 
 if __name__ == "__main__":
+    base_url: str = os.environ["BASE_URL"]
     api_key = os.environ["API_KEY"]
     uid = os.environ["ORDER_UID"]
-    test(api_key=api_key, uid=uid)
+    test(base_url=base_url, api_key=api_key, uid=uid)

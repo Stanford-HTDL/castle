@@ -40,7 +40,12 @@ services:
       # Use the public network created to be shared between Traefik and
       # any other service that needs to be publicly available with HTTPS
       - traefik-public
+      - bridge-net
 
 networks:
+
   traefik-public:
+    external: true
+
+  bridge-net:
     external: true

@@ -16,7 +16,13 @@ services:
       - CELERY_APP_INCLUDE=${CELERY_APP_INCLUDE}
     ports:
       - 80:80
+    networks:
+      - bridge-net
 
 networks:
+
   traefik-public:
+    external: false
+
+  bridge-net:
     external: false

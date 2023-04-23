@@ -3,7 +3,8 @@ import os
 import requests
 
 
-def test(url: str, api_key: str):
+def test(base_url: str, api_key: str):
+    url = f"{base_url}/process"
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"
@@ -26,9 +27,10 @@ def test(url: str, api_key: str):
         print(response.json())
     else:
         print("POST request failed with status code:", response.status_code)
+        print(response)
 
 
 if __name__ == "__main__":
-    url: str = os.environ["URL"]
+    base_url: str = os.environ["BASE_URL"]
     api_key = os.environ["API_KEY"]
-    test(url=url, api_key=api_key)
+    test(base_url=base_url, api_key=api_key)

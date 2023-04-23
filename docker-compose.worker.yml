@@ -1,4 +1,5 @@
 services:
+
   rabbitmq:
     hostname: rabbitmq
     image: rabbitmq:latest
@@ -6,13 +7,19 @@ services:
     volumes:
       - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
     ports:
-    - "5672:5672"
+      - "5672:5672"
+    networks:
+      - bridge-net
+
   redis:
     hostname: redis
     image: redis:latest
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - bridge-net
+
   worker:
     build:
       context: .
@@ -37,3 +44,9 @@ services:
     depends_on:
       - rabbitmq
       - redis
+    networks:
+      - bridge-net
+
+networks:
+  bridge-net:
+    driver: bridge
