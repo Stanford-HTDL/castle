@@ -18,10 +18,10 @@ done
 # docker network create <NETWORK NAME>
 
 # Start Celery worker(s)
-docker compose -f docker-compose.worker.yml up --detach --build --remove-orphans
+docker compose -f docker-compose.worker.yml up --detach
 
 # Start Traefik
-docker compose -f docker-compose.traefik.yml up --detach --build
+docker compose -f docker-compose.traefik.yml up --detach
 
 # Start Uvicorn
-docker compose -f docker-compose.api.yml up --detach --build
+docker compose -f docker-compose.api.yml up --detach
