@@ -1,7 +1,7 @@
 __author__ = "Richard Correro (richard@richardcorrero.com)"
 
 import os
-from typing import Any, List
+from typing import Any, List, Dict
 
 from celery.result import AsyncResult
 from fastapi import Depends, FastAPI, HTTPException, status
@@ -22,6 +22,8 @@ valid_api_keys: List[str] = get_api_keys(api_keys_path=API_KEYS_PATH)
 app = FastAPI(title=APP_TITLE, description=APP_DESCRIPTION, version=APP_VERSION)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # use token authentication
+
+task_uids: Dict = dict()
 
 
 def api_key_auth(api_key: str = Depends(oauth2_scheme)):
@@ -44,8 +46,8 @@ async def redirect():
     return RedirectResponse(url=f"/redoc", status_code=303)
 
 
-@app.post("/process", dependencies=[Depends(api_key_auth)])
-async def process_data(params: TaskParams) -> dict:    
+@app.post("/analyze", dependencies=[Depends(api_key_auth)])
+async def run_analysis(params: TaskParams) -> dict:    
     if params.process_uid is None:
         # Generate a UID for the task
         uid = generate_uid()
@@ -60,6 +62,8 @@ async def process_data(params: TaskParams) -> dict:
     
     # Generate the URL for the second endpoint
     result_url = f"/status/{uid}"
+
+    task_uids[uid] = "running"
     
     return {"url": result_url, "uid": uid}
 
@@ -75,10 +79,13 @@ async def get_status(uid: str) -> dict:
         # Task is completed, return the result(s)
         if task.successful():
             result: Any = task.result
+            task_uids[uid] = "completed"
             return {"status": "completed", "result": result}
         else:
-            print(task.result)
+            task_uids[uid] = "failed"
             return {"status": "failed"}
+    elif uid in task_uids:
+        return {"status": "running"}
     else:
         # Task is still running, return the status
-        return {"status": "running"}
+        return {"status": f"unknown uid: {uid}"}

@@ -24,10 +24,10 @@ class APITests(unittest.TestCase):
         }
         # Additional setup for your tests
 
-    def test_process_data(self):
+    def test_run_analysis(self):
         # Define a test case for the `/process/` endpoint
         response = self.client.post(
-            "/process/",
+            "/analyze/",
             json={
                 "start": "start_value", "stop": "stop_value", "id": 1, 
                 "process_uid": self.uid

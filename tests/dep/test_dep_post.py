@@ -4,7 +4,7 @@ import requests
 
 
 def test(base_url: str, api_key: str):
-    url = f"{base_url}/process"
+    url = f"{base_url}/analyze"
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"
