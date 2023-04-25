@@ -9,8 +9,7 @@ from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel, Field
 from starlette.responses import RedirectResponse
 
-from .celery_config.celery import celery_app
-from .celery_config.tasks import task
+from celery_config.celery import celery_app
 from .utils import generate_uid, get_api_keys
 
 API_KEYS_PATH: str = os.environ["API_KEYS_PATH"]
@@ -41,25 +40,23 @@ class TaskParams(BaseModel):
 
 
 @app.get("/")
-async def read_main():
+async def redirect():
     return RedirectResponse(url=f"/redoc", status_code=303)
 
 
 @app.post("/process", dependencies=[Depends(api_key_auth)])
-async def process_data(params: TaskParams) -> dict:
-    # # Compare the received api_key with the expected_api_key
-    # validate_api_key(api_key=params.api_key, valid_api_keys=valid_api_keys)
-    
+async def process_data(params: TaskParams) -> dict:    
     if params.process_uid is None:
         # Generate a UID for the task
         uid = generate_uid()
     else:
         uid = params.process_uid
     
-    # Create a Celery task and pass the parameters to it
-    task.apply_async(
-        kwargs=params.dict(), task_id=uid
-    )
+    celery_app.send_task(name="backend_task", task_id=uid)
+    # # Create a Celery task and pass the parameters to it
+    # task.apply_async(
+    #     kwargs=params.dict(), task_id=uid
+    # )
     
     # Generate the URL for the second endpoint
     result_url = f"/status/{uid}"

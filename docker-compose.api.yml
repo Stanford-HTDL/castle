@@ -1,3 +1,5 @@
+name: api-config
+
 services:
 
   api:
@@ -13,6 +15,7 @@ services:
       - APP_VERSION=${APP_VERSION}
       - CELERY_APP_NAME=${CELERY_APP_NAME}
       - CELERY_APP_INCLUDE=${CELERY_APP_INCLUDE}
+      - MODULE_NAME=${APP_MODULE_NAME}
     restart: always
     labels:
       # Enable Traefik for this specific "backend" service
@@ -45,7 +48,9 @@ services:
 networks:
 
   traefik-public:
-    external: false
+    name: traefik_public
+    external: true
 
   bridge-net:
-    external: false
+    name: bridge_net
+    external: true

@@ -1,3 +1,5 @@
+name: celery-config
+
 services:
 
   rabbitmq:
@@ -49,4 +51,5 @@ services:
 
 networks:
   bridge-net:
+    name: bridge_net
     driver: bridge

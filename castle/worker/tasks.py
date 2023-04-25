@@ -8,6 +8,8 @@ from typing import Iterable, List, Optional
 
 from google.cloud import storage
 
+from celery_config.celery import celery_app
+
 
 def _backend_task(
     filenames: Iterable[str], gcs_creds_path: str, bucket_name: str, 
@@ -49,6 +51,7 @@ def _backend_task(
     return signed_url
 
 
+@celery_app.task(name="backend_task")
 def backend_task(*args, **kwargs) -> dict:
     filenames: List[str] = ["lorem_ipsum.txt"]
     gcs_creds_path = os.environ["GCS_CREDS_PATH"]

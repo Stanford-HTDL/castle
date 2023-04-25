@@ -17,8 +17,10 @@ done
 # Create Docker network(s)
 # docker network create <NETWORK NAME>
 
-# Start Celery worker(s)
-docker compose -f docker-compose.worker.yml up --detach
+# Start Celery worker(s), message broker, and (optionally) backend
+# Pass all command-line parameters using `$@` 
+docker compose -f docker-compose.worker.yml up --detach "$@"
 
 # Start Uvicorn
-docker compose -f docker-compose.api.override.yml up
+# Pass all command-line parameters using `$@` 
+docker compose -f docker-compose.api.override.yml up --detach "$@"

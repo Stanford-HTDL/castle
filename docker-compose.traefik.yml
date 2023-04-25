@@ -1,3 +1,5 @@
+name: traefik-config
+
 services:
 
   traefik:
@@ -78,4 +80,5 @@ networks:
   # Use the previously created public network "traefik-public", shared with other
   # services that need to be publicly available via this Traefik
   traefik-public:
+    name: traefik_public
     external: false
