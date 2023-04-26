@@ -23,7 +23,7 @@ app = FastAPI(title=APP_TITLE, description=APP_DESCRIPTION, version=APP_VERSION)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # use token authentication
 
-task_uids: Dict = dict()
+task_uids: Dict = dict() # O(1) lookup time
 
 
 def api_key_auth(api_key: str = Depends(oauth2_scheme)):
@@ -87,5 +87,4 @@ async def get_status(uid: str) -> dict:
     elif uid in task_uids:
         return {"status": "running"}
     else:
-        # Task is still running, return the status
         return {"status": f"unknown uid: {uid}"}

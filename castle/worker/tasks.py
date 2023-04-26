@@ -38,7 +38,9 @@ def _backend_task(
 
         # Generate a signed URL with expiration time
         expiration_time = datetime.utcnow() + timedelta(minutes=exp_minutes)
-        signed_url = blob.generate_signed_url(expiration=expiration_time, method='GET')
+        signed_url = blob.generate_signed_url(
+            expiration=expiration_time, method='GET'
+        )
 
         return signed_url
     
@@ -60,7 +62,8 @@ def backend_task(*args, **kwargs) -> dict:
     content_type: str = "application/zip"
     exp_minutes: int = 60
     signed_url: str = _backend_task(
-        filenames=filenames, gcs_creds_path=gcs_creds_path, bucket_name=bucket_name,
-        blob_name=blob_name, content_type=content_type, exp_minutes=exp_minutes
+        filenames=filenames, gcs_creds_path=gcs_creds_path, 
+        bucket_name=bucket_name, blob_name=blob_name, content_type=content_type, 
+        exp_minutes=exp_minutes
     )
     return {"url": signed_url}
