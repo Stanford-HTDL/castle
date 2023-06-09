@@ -26,7 +26,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # use token authenticati
 task_uids: Dict = dict() # O(1) lookup time
 
 
-def api_key_auth(api_key: str = Depends(oauth2_scheme)):
+def api_key_auth(api_key: str = Depends(oauth2_scheme)) -> None:
     if api_key not in valid_api_keys:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -42,7 +42,7 @@ class TaskParams(BaseModel):
 
 
 @app.get("/")
-async def redirect():
+async def redirect() -> RedirectResponse:
     return RedirectResponse(url=f"/redoc", status_code=303)
 
 

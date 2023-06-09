@@ -14,7 +14,7 @@ def get_api_keys(api_keys_path: str) -> List[str]:
     return list(keys_dict.values())
 
 
-def generate_uid(uid_len: Optional[int] = 64):
+def generate_uid(uid_len: Optional[int] = 64) -> str:
     uid: str = ''.join(
         random.SystemRandom().choice(
             string.ascii_lowercase + string.digits
